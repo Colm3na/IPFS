@@ -33,4 +33,47 @@ en una carpeta del sistema que está en nuestro PATH pero que tiene accesos rest
 
 /usr/local/bin
 
+# Configuración
+
+Antes de iniciar nuestro sistema IPFS podemos personalizar algunas variables.
+Por ejemplo, podemos especificar donde se guardará la base datos local.
+
+Para ello declaramos la variable de sistema correspondiente.
+Hay 2 maneras, a nivel de todo el sistema, añadiendo la variable en el servicio
+del sistema:
+
+IPFS_PATH=/data/ethereum/ipfs
+
+O bien a nivel del usuario. Añadiendo la variable en 
+
+~/.bashrc
+export IPFS_PATH=/data/ethereum/ipfs
+
+En nuestro caso, como vamos a correr el daemon de ipfs como un servicio del
+sistema hemos preferido hacerlo en el servicio.
+
+Editamos nuestro archivo de servicio:
+
+$sudo vim /etc/systemd/system/ipfs.service
+
+Y añadimos el siguiente contenido:
+
+[Unit]
+Description=IPFS Daemon
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Environment="IPFS_PATH=/data/ethereum/ipfs"
+Type=simple
+ExecStart=/usr/local/bin/ipfs daemon
+User=user
+
+[Install]
+WantedBy=multi-user.target
+
+Tras esto podemos habilitar el servicio para que se arranque automáticamente en cada reinicio.
+
+$sudo systemclt 
+
+
 
