@@ -116,6 +116,7 @@ Antes de iniciar nuestro sistema IPFS podemos personalizar algunas variables.
 Por ejemplo, podemos especificar donde se guardará la base datos local.
 
 Para ello declaramos la variable de sistema correspondiente.
+
 Hay 2 maneras, a nivel de todo el sistema, añadiendo la variable en el servicio
 del sistema:
 
