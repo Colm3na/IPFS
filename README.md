@@ -1,6 +1,10 @@
-## IPFS
-Sistema de archivos [Inter Planetario](https://es.wikipedia.org/wiki/Sistema_de_archivos_interplanetarios)
+<h1 align="center">IPFS</h1>
 
+<p align="center">
+<img src="images/ipfs.png">
+</p>
+
+Sistema de archivos [Inter-Planetario](https://es.wikipedia.org/wiki/Sistema_de_archivos_interplanetarios)
 
 
 Vamos a desplegar nuestro propio nodo en la red IPFS.
