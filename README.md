@@ -6,6 +6,19 @@
 
 Sistema de archivos [Inter-Planetario](https://es.wikipedia.org/wiki/Sistema_de_archivos_interplanetarios)
 
+<sumary>
+
+**¿Qué es IPFS?**
+</sumary>
+<details>
+
+InterPlanetary File System (IPFS) es un [protocolo](https://es.wikipedia.org/wiki/Protocolo_de_comunicaciones) y una red diseñados para crear un método [peer-to-peer](https://es.wikipedia.org/wiki/Peer-to-peer) de almacenamiento y distribución de contenido [hipermedia](https://es.wikipedia.org/wiki/Hipermedia) en un [sistema de archivos distribuido](https://en.wikipedia.org/wiki/Clustered_file_system#Distributed_file_systems).
+
+IPFS es un sistema de archivos distribuido de par a par que busca conectar todos los dispositivos informáticos con el mismo sistema de archivos. IPFS podría verse como un único grupo de [BitTorrent](https://es.wikipedia.org/wiki/BitTorrent), intercambiando objetos dentro de un repositorio [Git](https://es.wikipedia.org/wiki/Git). En otras palabras, IPFS proporciona un modelo de almacenamiento en [bloque](https://es.wikipedia.org/wiki/Bloque_(informática)) de alto rendimiento y con dirección de contenido, con [hipervínculos](https://es.wikipedia.org/wiki/Hiperenlace) con dirección de contenido.
+
+Se puede acceder al sistema de archivos de varias maneras, incluyendo a través de [FUSE](https://es.wikipedia.org/wiki/Sistema_de_archivos_en_el_espacio_de_usuario) y de [HTTP](https://es.wikipedia.org/wiki/Protocolo_de_transferencia_de_hipertexto).
+
+</details>
 
 Vamos a desplegar nuestro propio nodo en la red IPFS.
 Se trata de una red p2p que reutiliza mucho código de Ethereum.
