@@ -18,15 +18,19 @@ IPFS es un sistema de archivos distribuido de par a par que busca conectar todos
 
 Se puede acceder al sistema de archivos de varias maneras, incluyendo a través de [FUSE](https://es.wikipedia.org/wiki/Sistema_de_archivos_en_el_espacio_de_usuario) y de [HTTP](https://es.wikipedia.org/wiki/Protocolo_de_transferencia_de_hipertexto).
 
+* [Repositorio](https://github.com/ipfs/ipfs) IPFS.
+
+* [Documentación](https://docs.ipfs.io/introduction/overview/) IPFS.
+
 </details>
 
 Vamos a desplegar nuestro propio nodo en la red IPFS.
 Se trata de una red p2p que reutiliza mucho código de Ethereum.
 
-Primero nos aseguramos de que tenemos instalado go:
+Primero nos aseguramos de que tenemos instalado [Go](https://golang.org):
 
 ```
-$ go version
+go version
 
 go version go1.11.5 linux/amd64
 ```
@@ -73,27 +77,27 @@ source /home/$USER/.profile
 
 </details>
 
-Despues descargamos el [tarball de IPFS](https://dist.ipfs.io/go-ipfs)
+Después, descargamos el [tarball de IPFS](https://dist.ipfs.io/go-ipfs)
 
-En esta web vemos todas las versiones compiladas con go de IPFS.
-La última versión en estos momentos es la `v0.4.9`
+> En su web vemos todas las versiones compiladas con `Go` de IPFS.
+> La última versión en estos momentos es la `v0.4.9`
 
-De manera que descargamos el tar con este comando:
+Descargamos el `tar` con este comando:
 
 ```
-$ wget https://dist.ipfs.io/go-ipfs/v0.4.9/go-ipfs_v0.4.9_linux-amd64.tar.gz
+wget https://dist.ipfs.io/go-ipfs/v0.4.9/go-ipfs_v0.4.9_linux-amd64.tar.gz
 ```
 
 Lo descomprimimos en cualquier carpeta:
 
 ```
-$ tar xzvf go-ipfs_v0.4.9_linux-amd64.tar.gz
+tar xzvf go-ipfs_v0.4.9_linux-amd64.tar.gz
 ```
 
 Y ejecutamos el installer que lleva dentro:
 
 ```
-$ sudo ./go-ipfs/install.sh
+sudo ./go-ipfs/install.sh
 ```
 
 > Lo hacemos con sudo porque el instalador tratará de colocar el binario de IPFS
@@ -132,7 +136,7 @@ sistema hemos preferido hacerlo en el servicio.
 Editamos nuestro archivo de servicio:
 
 ```
-$ sudo vim /etc/systemd/system/ipfs.service
+sudo vim /etc/systemd/system/ipfs.service
 ```
 
 Y añadimos el siguiente contenido:
@@ -155,6 +159,6 @@ WantedBy=multi-user.target
 Tras esto podemos habilitar el servicio para que se arranque automáticamente en cada reinicio.
 
 ```
-$ sudo systemclt 
+sudo systemclt 
 ```
 </details>
