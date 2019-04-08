@@ -90,8 +90,11 @@ en una carpeta del sistema que está en nuestro PATH pero que tiene accesos rest
 /usr/local/bin
 ```
 
-# Configuración
+<sumary>
 
+# Configuración
+</sumary>
+<details>
 Antes de iniciar nuestro sistema IPFS podemos personalizar algunas variables.
 Por ejemplo, podemos especificar donde se guardará la base datos local.
 
@@ -141,3 +144,4 @@ Tras esto podemos habilitar el servicio para que se arranque automáticamente en
 ```
 $ sudo systemclt 
 ```
+</details>
