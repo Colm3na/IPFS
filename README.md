@@ -181,19 +181,19 @@ gateway http.
 
 Como nos gusta tener bien cerrado nuestro firewall en nuestro caso hemos necesitado varias líneas de iptables.
 
-# Tabla Mangle PREROUTING
+### Tabla Mangle PREROUTING
 iptables -t mangle -A PREROUTING -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
 iptables -t mangle -A PREROUTING -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
 
-# Tabla Mangle INPUT
+### Tabla Mangle INPUT
 iptables -t mangle -A INPUT -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
 iptables -t mangle -A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
 
-# Tabla Filter INPUT
+### Tabla Filter INPUT
 iptables -t filter -A INPUT -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
 iptables -t filter -A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
 
-# Tabla Nat PREROUTING
+### Tabla Nat PREROUTING
 iptables -t nat -A PREROUTING -p tcp ! -s 192.168.0.0/16 -m tcp --dport 4001  -j DNAT --to-destination 192.168.122.20:4001
 iptables -t nat -A PREROUTING -p tcp ! -s 192.168.0.0/16 -m tcp --dport 8080  -j DNAT --to-destination 192.168.122.20:8080
 
