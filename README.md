@@ -40,17 +40,17 @@ go version go1.11.5 linux/amd64
 :: **Si no lo tenemos instalado, seguimos los siguientes pasos** ::
 </sumary>
 <details>
-  
+
 ```
-wget -c 'https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz' -O go1.11.5.linux-amd64.tar.gz 
+wget -c 'https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz' -O go1.11.5.linux-amd64.tar.gz
 ```
 
 ```
-sudo tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz 
+sudo tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz
 ```
 
 ```
-sudo rm -Rf go1.11.5.linux-amd64.tar.gz 
+sudo rm -Rf go1.11.5.linux-amd64.tar.gz
 ```
 **Añadimos lo siguiente en nuestro `.profile`**
 
@@ -72,7 +72,7 @@ EOT
 > Recargamos nuestro profile con:
 
 ```
-source /home/$USER/.profile 
+source /home/$USER/.profile
 ```
 
 </details>
@@ -124,7 +124,7 @@ del sistema:
 IPFS_PATH=/data/ethereum/ipfs
 ```
 
-O bien a nivel del usuario. Añadiendo la variable en 
+O bien a nivel del usuario. Añadiendo la variable en
 
 ```
 ~/.bashrc
@@ -157,9 +157,52 @@ User=user
 WantedBy=multi-user.target
 ```
 
-Tras esto podemos habilitar el servicio para que se arranque automáticamente en cada reinicio.
+Lo siguiente sería iniciar la base de datos y archivos de configuración. Para ello ipfs tiene el siguiente comando:
+```
+ipfs init
+```
+
+Tras esto ya podemos habilitar el servicio para que se arranque automáticamente en cada reinicio.
 
 ```
-sudo systemclt 
+sudo systemclt daemon-reload
+sudo systemctl enable ipfs
+sudo systemctl start ipfs
 ```
 </details>
+
+## Configuración de red
+
+Si estamos trabajando en una máquina virtual o simplemente detrás de un router que hace nat,
+entonces será necesario hacer un forward de los puertos que usa ipfs para comunicarse con otros nodos.
+Si no hacemos esto entoces lo que tendríamos sería sólo un nodo local, sin ningún tipo de replicación
+y sin posibilidad de utilizar los gateways globales (https://ipfs.ink/). Los puertos que usa IPFS son el 4001 para comunicación p2p y el 8080 para levantar un gateway http.
+
+Como nos gusta tener bien cerrado nuestro firewall en nuestro caso hemos necesitado varias líneas de iptables. Todas estas reglas son para la máquina host de nuestro sistema de virtualización (por ejemplo libvirt/KVM)
+
+### Tabla Mangle PREROUTING
+```
+iptables -t mangle -A PREROUTING -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
+iptables -t mangle -A PREROUTING -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
+```
+### Tabla Mangle INPUT
+```
+iptables -t mangle -A INPUT -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
+iptables -t mangle -A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
+```
+
+### Tabla Filter INPUT
+```
+iptables -t filter -A INPUT -p tcp -m state --state NEW -m tcp --dport 4001 -j ACCEPT
+iptables -t filter -A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
+```
+
+### Tabla Nat PREROUTING
+```
+iptables -t nat -A PREROUTING -p tcp ! -s 192.168.0.0/16 -m tcp --dport 4001  -j DNAT --to-destination 192.168.122.20:4001
+iptables -t nat -A PREROUTING -p tcp ! -s 192.168.0.0/16 -m tcp --dport 8080  -j DNAT --to-destination 192.168.122.20:8080
+```
+
+Estas 2 úlimas reglas son las que realmente hacen el forward de las peticiones a los puertos de interés desde el host hasta
+la máquina virtual. Las reglas anteriores son reglas de ACCEPT ya que tenemos por defecto todas las tablas y cadenas de nuestro
+firewall cerrados (DROP). Si este no es tu caso, quizás no necesites tantas reglas de cortafuego.
